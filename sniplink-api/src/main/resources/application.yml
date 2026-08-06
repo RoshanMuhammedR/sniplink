@@ -1,0 +1,41 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: sniplink
+  threads:
+    virtual:
+      enabled: true
+  datasource:
+    url: jdbc:postgresql://localhost:5432/sniplink
+    username: sniplink
+    password: sniplink
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: false
+    open-in-view: false
+  data:
+    redis:
+      host: localhost
+      port: 6379
+      timeout: 2s
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+    operations-sorter: method
+
+app:
+  base-url: http://localhost:8080
+  cors:
+    allowed-origins: http://localhost:5173
+  rate-limit:
+    requests-per-minute: 30
+  cache:
+    url-ttl-hours: 24
+
+logging:
+  level:
+    com.sniplink: INFO
