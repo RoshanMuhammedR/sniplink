@@ -1,5 +1,8 @@
 server:
   port: 8080
+  # Behind the production reverse proxy, trust X-Forwarded-Proto/Host so
+  # generated links and Swagger's server URL use https and the real domain.
+  forward-headers-strategy: framework
 
 spring:
   application:
@@ -35,6 +38,31 @@ app:
     requests-per-minute: 30
   cache:
     url-ttl-hours: 24
+
+# Health is the only endpoint exposed, and the reverse proxy does not route
+# /actuator/** publicly — it is reachable from inside the Docker network only.
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health
+  endpoint:
+    health:
+      probes:
+        enabled: true
+      show-details: never
+      group:
+        readiness:
+          # The default readiness group is only `readinessState`, which reports
+          # UP even with the database down — useless as a deploy gate. Postgres
+          # is the source of truth, so it belongs here.
+          #
+          # Redis deliberately does NOT: the cache and the rate limiter both
+          # fail open by design (see UrlServiceImpl.cache and
+          # RateLimitInterceptor.preHandle), so a Redis outage degrades the app
+          # rather than breaking it. Including it would restart-loop a
+          # container that is still serving traffic correctly.
+          include: readinessState,db
 
 logging:
   level:

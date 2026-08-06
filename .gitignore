@@ -1,0 +1,4 @@
+# Production secrets live only on the VPS — never commit them.
+.env
+deploy/.env
+deploy/backups/

@@ -1,0 +1,11 @@
+# These files are checked out on a Linux runner and executed on a Linux VPS.
+# A CRLF shebang makes the kernel fail with "bad interpreter", and CRLF in the
+# Caddyfile or nginx.conf breaks parsing — pin them all to LF regardless of the
+# committer's core.autocrlf setting.
+deploy/*.sh        text eol=lf
+deploy/Caddyfile   text eol=lf
+deploy/.env.example text eol=lf
+**/Dockerfile      text eol=lf
+**/.dockerignore   text eol=lf
+sniplink-ui/nginx.conf text eol=lf
+.github/workflows/*.yml text eol=lf

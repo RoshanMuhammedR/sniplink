@@ -163,6 +163,10 @@ Defaults live in `sniplink-api/src/main/resources/application.yml` and can be ov
 | `app.cache.url-ttl-hours` | `24` | Redis TTL for resolved URLs |
 | `app.cors.allowed-origins` | `http://localhost:5173` | Allowed browser origins |
 
+## Deploying
+
+Production runs as five containers behind Caddy — API, UI, Postgres, Redis, and the proxy — on a single VPS, with GitHub Actions building the images and rolling them out on every push to `main`. Full VPS setup commands, the secrets to configure, and the operations runbook are in [DEPLOYMENT.md](DEPLOYMENT.md).
+
 ## Tests
 
 ```bash
