@@ -69,6 +69,24 @@ Health means `/actuator/health/readiness`, whose group includes `db`. Spring's d
 
 ---
 
+### Verified behaviour
+
+Tested against the running stack via `http://localhost:3000` on the VPS:
+
+| Request | Result |
+|---|---|
+| `POST /api/v1/shorten` | 200, returns `https://sniplink.dedyn.io/<code>` |
+| same URL again | same short code — idempotent |
+| `GET /<code>` | 302 with the original `Location` |
+| `GET /api/v1/analytics/<code>` | click recorded with IP and user agent |
+| `POST` with `javascript:` | 400, `Only http and https URLs are supported` |
+| `DELETE /api/v1/urls/<code>` | 204 |
+| `/`, `/index.html`, any unknown path | 200, the SPA shell |
+| `/swagger-ui.html`, `/v3/api-docs` | reach springdoc |
+| `/actuator/health` | 200 **but `text/html`** — the SPA fallback, not the endpoint |
+
+That last row is worth knowing: nginx has no `/actuator` location, so the request falls through to `try_files … /index.html` rather than 404ing. The actuator is genuinely unreachable from outside — `docker compose exec api wget -qO- localhost:8080/actuator/health` is the only way to it.
+
 ## Operations
 
 All from `/opt/sniplink` as `deploy`.
