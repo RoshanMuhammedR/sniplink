@@ -2,6 +2,8 @@
 
 A URL shortener with Base62 short codes, Redis-cached redirects, and asynchronous click analytics.
 
+**Live at [sniplink.dedyn.io](https://sniplink.dedyn.io)** — [API docs](https://sniplink.dedyn.io/swagger-ui.html)
+
 ## Features
 
 - **Collision-free short codes** — Base62 encoding of the database id, so there is no generate-and-retry loop and no duplicate check.
