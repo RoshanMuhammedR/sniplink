@@ -21,5 +21,8 @@ COPY --from=build /build/dist /usr/share/nginx/html
 
 EXPOSE 80
 
+# 127.0.0.1, not localhost: inside the container localhost resolves to ::1
+# first, and this nginx listens on IPv4 only — so `localhost` gets connection
+# refused and the container reports unhealthy while serving traffic fine.
 HEALTHCHECK --interval=10s --timeout=3s --start-period=5s --retries=3 \
-	CMD wget -qO /dev/null http://localhost/ || exit 1
+	CMD wget -qO /dev/null http://127.0.0.1/ || exit 1
