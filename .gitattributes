@@ -1,9 +1,9 @@
-# These files are checked out on a Linux runner and executed on a Linux VPS.
-# A CRLF shebang makes the kernel fail with "bad interpreter", and CRLF in the
-# Caddyfile or nginx.conf breaks parsing — pin them all to LF regardless of the
-# committer's core.autocrlf setting.
-deploy/*.sh        text eol=lf
-deploy/Caddyfile   text eol=lf
+# These files are checked out on a Linux runner and rsynced onto a Linux VPS, or executed
+# by a Linux shell. A CRLF shebang makes the kernel fail with "bad interpreter", and CRLF in
+# nginx.conf/compose YAML causes subtler parse issues — pin them all to LF regardless of the
+# committer's core.autocrlf setting. (The reverse proxy's Caddyfile now lives on the VPS
+# itself, not in this repo, since it's shared across projects.)
+deploy/docker-compose.yml text eol=lf
 deploy/.env.example text eol=lf
 **/Dockerfile      text eol=lf
 **/.dockerignore   text eol=lf

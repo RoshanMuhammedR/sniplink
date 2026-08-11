@@ -1,0 +1,7 @@
+target
+.git
+.gitignore
+.gitattributes
+*.md
+.claude
+src/test
