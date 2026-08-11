@@ -9,6 +9,7 @@ services:
 
   api:
     image: ghcr.io/${GHCR_OWNER}/sniplink-api:${IMAGE_TAG}
+    container_name: url-short-api
     restart: on-failure:5
     labels:
       sablier.enable: "true"
@@ -33,6 +34,7 @@ services:
 
   ui:
     image: ghcr.io/${GHCR_OWNER}/sniplink-ui:${IMAGE_TAG}
+    container_name: url-short-ui
     restart: on-failure:5
     depends_on: [api]
     labels:
