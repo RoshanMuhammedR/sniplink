@@ -72,6 +72,7 @@ jobs:
           POSTGRES_USER=url_short
           POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }}
           APP_BASE_URL=${{ secrets.APP_BASE_URL }}
+          CORS_ALLOWED_ORIGINS=http://37.187.140.45:8081,http://sniplink.dedyn.io,https://sniplink.dedyn.io
           JWT_SECRET=${{ secrets.JWT_SECRET }}
           RATE_LIMIT_PER_MINUTE=30
           CACHE_TTL_HOURS=24
